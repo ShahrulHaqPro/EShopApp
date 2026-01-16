@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import DrawerNavigator from "./src/navigation/DrawerNavigator";
+import { StatusBar, StyleSheet, Platform } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import { CartProvider } from "./src/context/CartContext";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider style={styles.container}>
+      <CartProvider>
+        <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+        <NavigationContainer>
+          <DrawerNavigator />
+        </NavigationContainer>
+      </CartProvider>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: StatusBar.currentHeight || 0,
+    // paddingTop: Platform.OS === "android" ? 25 : 0,
   },
 });
